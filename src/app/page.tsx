@@ -20,7 +20,7 @@ export default async function IndexPage() {
         {posts.map((post) => (
           <li className="hover:underline" key={post._id}>
             <Link href={`/${post.slug.current}`}>
-              <h2 className="text-xl font-semibold">{post.title}</h2>
+              <h2 className="text-xl font-semibold font-sans">{post.title}</h2>
               <p>{new Date(post.publishedAt).toLocaleDateString()}</p>
             </Link>
           </li>
