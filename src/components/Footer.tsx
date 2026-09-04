@@ -1,6 +1,6 @@
 "use client";
 import { NAV_STRUCTURE } from "@/lib/navigation";
-import { Zap, Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
+import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react";
 import Link from "next/link";
 import Logo from "./Logo";
 

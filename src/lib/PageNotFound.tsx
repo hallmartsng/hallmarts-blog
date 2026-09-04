@@ -1,22 +1,10 @@
+"use client";
 import { useLocation } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
 
 export default function PageNotFound({}) {
+  // const location = useLocation();
   const location = useLocation();
   const pageName = location.pathname.substring(1);
-
-  const { data: authData, isFetched } = useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      try {
-        const user = await base44.auth.me();
-        return { user, isAuthenticated: true };
-      } catch (error) {
-        return { user: null, isAuthenticated: false };
-      }
-    },
-  });
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
@@ -35,13 +23,15 @@ export default function PageNotFound({}) {
             </h2>
             <p className="text-slate-600 leading-relaxed">
               The page{" "}
-              <span className="font-medium text-slate-700">"{pageName}"</span>{" "}
+              <span className="font-medium text-slate-700">
+                &quot;{pageName}&quot;
+              </span>{" "}
               could not be found in this application.
             </p>
           </div>
 
           {/* Admin Note */}
-          {isFetched &&
+          {/* {isFetched &&
             authData.isAuthenticated &&
             authData.user?.role === "admin" && (
               <div className="mt-8 p-4 bg-slate-100 rounded-lg border border-slate-200">
@@ -60,7 +50,7 @@ export default function PageNotFound({}) {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
           {/* Action Button */}
           <div className="pt-6">

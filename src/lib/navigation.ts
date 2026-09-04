@@ -23,6 +23,49 @@ type NavStructureType = {
   }[];
 };
 
+export type SubcategoryMetaType = {
+  podcast: {
+    label: string;
+    emoji: string;
+  };
+  market: {
+    label: string;
+    emoji: string;
+  };
+  jobs: {
+    label: string;
+    emoji: string;
+  };
+  partnership: {
+    label: string;
+    emoji: string;
+  };
+  events: {
+    label: string;
+    emoji: string;
+  };
+  scholarship: {
+    label: string;
+    emoji: string;
+  };
+  "digital-marketing": {
+    label: string;
+    emoji: string;
+  };
+  "campus-programs": {
+    label: string;
+    emoji: string;
+  };
+  tournaments: {
+    label: string;
+    emoji: string;
+  };
+  "student-logistics": {
+    label: string;
+    emoji: string;
+  };
+};
+
 export const NAV_STRUCTURE: NavStructureType[] = [
   {
     label: "Campus",
@@ -141,7 +184,7 @@ export const CATEGORY_META = {
   },
 };
 
-export const SUBCATEGORY_META = {
+export const SUBCATEGORY_META: SubcategoryMetaType = {
   podcast: { label: "Podcast", emoji: "🎙️" },
   market: { label: "Market", emoji: "🛍️" },
   jobs: { label: "Jobs & Talents", emoji: "💼" },

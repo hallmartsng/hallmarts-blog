@@ -1,7 +1,6 @@
 "use client";
 
-import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
 const Hero = () => {

@@ -3,7 +3,7 @@ import { type SanityDocument } from "next-sanity";
 
 import { NAV_STRUCTURE } from "@/lib/navigation";
 import PostCard from "@/components/PostCard";
-import { ArrowRight, TrendingUp, Sparkles } from "lucide-react";
+import { ArrowRight, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import Hero from "./Hero";
 

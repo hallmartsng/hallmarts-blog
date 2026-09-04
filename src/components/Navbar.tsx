@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { NAV_STRUCTURE } from "@/lib/navigation";
-import { Menu, X, ChevronDown, Zap, UserCircle } from "lucide-react";
+import { Menu, X, ChevronDown, UserCircle } from "lucide-react";
 import Link from "next/link";
 import Logo from "./Logo";
 

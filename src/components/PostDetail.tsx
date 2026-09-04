@@ -50,8 +50,9 @@ export default function PostDetail({
     );
   }
 
-  const sub = SUBCATEGORY_META[post.subcategory] || {
-    label: post.subcategory,
+  const subcategory = String(post.subcategory) as keyof typeof SUBCATEGORY_META;
+  const sub = SUBCATEGORY_META[subcategory] || {
+    label: String(post.subcategory),
     emoji: "📌",
   };
   const section = NAV_STRUCTURE.find((s) => s.category === post.category);
@@ -160,7 +161,7 @@ export default function PostDetail({
         {/* Tags */}
         {post.tags?.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-2">
-            {post.tags.map((t) => (
+            {post.tags.map((t: string) => (
               <span
                 key={t}
                 className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600"
@@ -204,8 +205,9 @@ export default function PostDetail({
 }
 
 function PostCardMini({ post }: { post: SanityDocument }) {
-  const sub = SUBCATEGORY_META[post.subcategory] || {
-    label: post.subcategory,
+  const subcategory = String(post.subcategory) as keyof typeof SUBCATEGORY_META;
+  const sub = SUBCATEGORY_META[subcategory] || {
+    label: String(post.subcategory),
     emoji: "📌",
   };
   const postImageUrl = post.image
@@ -227,7 +229,7 @@ function PostCardMini({ post }: { post: SanityDocument }) {
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="h-full w-full bg-gradient-to-br from-red-100 to-red-50" />
+          <div className="h-full w-full bg-linear-to-br from-red-100 to-red-50" />
         )}
       </div>
       <div className="flex flex-col justify-center">

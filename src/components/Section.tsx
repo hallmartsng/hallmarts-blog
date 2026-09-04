@@ -1,29 +1,22 @@
 "use client";
 import { type SanityDocument } from "next-sanity";
-import {
-  NAV_STRUCTURE,
-  SUBCATEGORY_META,
-  CATEGORY_META,
-} from "@/lib/navigation";
+import { NAV_STRUCTURE, SUBCATEGORY_META } from "@/lib/navigation";
 import PostCard from "@/components/PostCard";
-import {
-  GraduationCap,
-  BookOpen,
-  Trophy,
-  Truck,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-
-const ICONS = { GraduationCap, BookOpen, Trophy, Truck };
 
 export default function Section({ posts }: { posts: SanityDocument[] }) {
   const { category, subcategory } = useParams();
   console.log("Posts: ", posts);
 
   const section = NAV_STRUCTURE.find((s) => s.category === category);
-  const sub = SUBCATEGORY_META[subcategory];
+  const subcategoryKey = Array.isArray(subcategory)
+    ? subcategory[0]
+    : subcategory;
+  const sub = subcategoryKey
+    ? SUBCATEGORY_META[subcategoryKey as keyof typeof SUBCATEGORY_META]
+    : undefined;
 
   if (!section || !sub) {
     return (
@@ -39,12 +32,10 @@ export default function Section({ posts }: { posts: SanityDocument[] }) {
     );
   }
 
-  const Icon = ICONS[section.icon];
-
   return (
     <div className="bg-white">
       {/* Breadcrumb + hero */}
-      <div className="border-b border-gray-100 bg-gradient-to-b from-gray-50 to-white">
+      <div className="border-b border-gray-100 bg-linear-to-b from-gray-50 to-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-6">
           <nav className="flex items-center gap-1.5 text-xs font-semibold text-gray-400">
             <Link href="/" className="hover:text-[#ED1D3E]">
