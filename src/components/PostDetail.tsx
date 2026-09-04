@@ -1,18 +1,29 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+
 import { SUBCATEGORY_META, NAV_STRUCTURE } from "@/lib/navigation";
 import ReactMarkdown from "react-markdown";
 import { Clock, ChevronRight, ArrowLeft } from "lucide-react";
-import { SanityDocument } from "next-sanity";
+import { PortableText, SanityDocument } from "next-sanity";
 import Image from "next/image";
+import { urlForImage } from "@/utils/imageGenerator";
+import Link from "next/link";
 
-export default function PostDetail({ post }: { post: SanityDocument }) {
-  const [loading, setLoading] = useState(true);
-  const [more, setMore] = useState([]);
+export default function PostDetail({
+  post,
+  morePosts,
+  isloading,
+}: {
+  post: SanityDocument;
+  morePosts: SanityDocument[];
+  isloading: boolean;
+}) {
+  console.log(post);
 
-  if (loading) {
+  const postImageUrl = post.image
+    ? urlForImage(post.image)?.width(550).height(310).url()
+    : null;
+
+  if (isloading) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24">
         <div className="h-72 animate-pulse rounded-3xl bg-gray-100" />
@@ -29,7 +40,10 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-24 text-center">
         <h1 className="text-2xl font-bold text-gray-900">Post not found</h1>
-        <Link to="/" className="mt-4 inline-block text-[#ED1D3E] font-semibold">
+        <Link
+          href="/"
+          className="mt-4 inline-block text-[#ED1D3E] font-semibold"
+        >
           Back home
         </Link>
       </div>
@@ -47,7 +61,7 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
       <article className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs font-semibold text-gray-400">
-          <Link to="/" className="hover:text-[#ED1D3E]">
+          <Link href="/" className="hover:text-[#ED1D3E]">
             Home
           </Link>
           <ChevronRight className="h-3 w-3" />
@@ -78,10 +92,10 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
         </header>
 
         {/* Cover */}
-        {post.image_url && (
+        {postImageUrl && (
           <div className="mt-7 overflow-hidden rounded-3xl">
             <Image
-              src={post.image_url}
+              src={postImageUrl}
               alt={post.title}
               width={860}
               height={560}
@@ -92,7 +106,8 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
 
         {/* Body */}
         <div className="prose prose-lg max-w-none mt-8">
-          {post.content ? (
+          {Array.isArray(post.body) && <PortableText value={post.body} />}
+          {post.body ? (
             <ReactMarkdown
               components={{
                 p: ({ children }) => (
@@ -157,7 +172,7 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
         )}
 
         <Link
-          to={
+          href={
             section
               ? section.children.find((c) => c.subcategory === post.subcategory)
                   ?.path || "/"
@@ -170,15 +185,15 @@ export default function PostDetail({ post }: { post: SanityDocument }) {
       </article>
 
       {/* More from this category */}
-      {more.length > 0 && (
+      {morePosts.length > 0 && (
         <section className="border-t border-gray-100 bg-gray-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
             <h2 className="text-2xl font-extrabold text-gray-900 mb-6">
               More from {section?.label}
             </h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {more.map((p) => (
-                <PostCardMini key={p.id} post={p} />
+              {morePosts.map((p, key) => (
+                <PostCardMini key={key} post={p} />
               ))}
             </div>
           </div>
@@ -193,17 +208,22 @@ function PostCardMini({ post }: { post: SanityDocument }) {
     label: post.subcategory,
     emoji: "📌",
   };
+  const postImageUrl = post.image
+    ? urlForImage(post.image)?.width(550).height(310).url()
+    : null;
+
   return (
     <Link
-      to={`/post/${post.id}`}
+      href={`/post/${post.slug.current}`}
       className="group flex gap-4 rounded-2xl border border-gray-100 bg-white p-3 shadow-sm hover:shadow-md transition-all"
     >
       <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl">
-        {post.image_url ? (
+        {postImageUrl ? (
           <Image
-            src={post.image_url}
+            src={postImageUrl}
             alt={post.title}
-            fittingType="fill"
+            width={850}
+            height={570}
             className="h-full w-full object-cover"
           />
         ) : (
