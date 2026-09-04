@@ -6,6 +6,7 @@ import {
 import { client } from "@/sanity/client";
 import Link from "next/link";
 import { Metadata } from "next";
+import PostDetail from "@/components/PostDetail";
 
 interface PageProps {
   params: Promise<{
@@ -54,25 +55,26 @@ export default async function PostPage({
     : null;
 
   return (
-    <main className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
-      <Link href="/" className="hover:underline">
-        ← Back to posts
-      </Link>
-      {postImageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={postImageUrl}
-          alt={post.title}
-          className="aspect-video rounded-xl"
-          width="550"
-          height="310"
-        />
-      )}
-      <h1 className="text-4xl font-bold mb-8">{post.title}</h1>
-      <div className="prose">
-        <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p>
-        {Array.isArray(post.body) && <PortableText value={post.body} />}
-      </div>
-    </main>
+    // <main className="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-4">
+    //   <Link href="/" className="hover:underline">
+    //     ← Back to posts
+    //   </Link>
+    //   {postImageUrl && (
+    //     // eslint-disable-next-line @next/next/no-img-element
+    //     <img
+    //       src={postImageUrl}
+    //       alt={post.title}
+    //       className="aspect-video rounded-xl"
+    //       width="550"
+    //       height="310"
+    //     />
+    //   )}
+    //   <h1 className="text-4xl font-bold mb-8">{post.title}</h1>
+    //   <div className="prose">
+    //     <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p>
+    //     {Array.isArray(post.body) && <PortableText value={post.body} />}
+    //   </div>
+    // </main>
+    <PostDetail post={post || {}} />
   );
 }
